@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX FITNESS — Forge Your Legend</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --charcoal: #141414;
+    --steel: #1e1e1e;
+    --iron: #2a2a2a;
+    --smoke: #888;
+    --ash: #bbb;
+    --white: #f5f3ef;
+    --fire: #e8400c;
+    --ember: #ff6b35;
+    --gold: #c9a84c;
+    --gold-light: #e8c96b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--fire);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(232,64,12,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.2s, height 0.2s;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    backdrop-filter: blur(2px);
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(10,10,10,0.97); }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--fire); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ash);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fire); }
+  .nav-cta {
+    background: var(--fire);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--ember); transform: scale(1.04); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(232,64,12,0.12) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      linear-gradient(160deg, #0a0a0a 0%, #141414 50%, #0a0a0a 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(232,64,12,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(232,64,12,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 70% 50%, black 30%, transparent 70%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 5vw;
+    max-width: 900px;
+    padding-top: 72px;
+  }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--fire);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 36px; height: 2px; background: var(--fire);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 13vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .hero-title .accent { color: var(--fire); display: block; }
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--ash);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 2rem 0 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.55s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1.2rem; align-items: center;
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: var(--fire);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 40px rgba(232,64,12,0.35);
+  }
+  .btn-primary:hover { background: var(--ember); transform: translateY(-2px); box-shadow: 0 8px 50px rgba(232,64,12,0.5); }
+  .btn-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ash);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--white); border-color: var(--white); }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; right: 5vw;
+    display: flex; gap: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+  .stat-num span { color: var(--fire); }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    margin-top: 0.2rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--fire);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--fire);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--white);
+  }
+  .section-title em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  }
+
+  /* PROGRAMS / MEMBERSHIP */
+  #plans {
+    padding: 8rem 5vw;
+    background: var(--charcoal);
+    position: relative;
+  }
+  #plans::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--fire), transparent);
+  }
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.06);
+  }
+  .plan-card {
+    background: var(--charcoal);
+    padding: 3rem 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+    overflow: hidden;
+  }
+  .plan-card:hover { background: var(--steel); }
+  .plan-card.featured {
+    background: var(--steel);
+    border-top: 2px solid var(--fire);
+  }
+  .plan-card.featured::after {
+    content: 'MOST POPULAR';
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--fire);
+  }
+  .plan-tier {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    margin-bottom: 1.5rem;
+  }
+  .plan-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .plan-price {
+    display: flex; align-items: flex-end; gap: 0.3rem;
+    margin-bottom: 0.6rem;
+  }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .featured .price-amount { color: var(--fire); }
+  .price-period {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    color: var(--smoke);
+    padding-bottom: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+  .plan-desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--smoke);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .plan-features { list-style: none; margin-bottom: 2.5rem; }
+  .plan-features li {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: var(--ash);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .plan-features li::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--smoke);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    flex-shrink: 0;
+  }
+  .featured .plan-features li::before { background: var(--fire); }
+  .plan-features li.disabled { color: rgba(255,255,255,0.2); }
+  .plan-features li.disabled::before { background: rgba(255,255,255,0.1); }
+  .plan-btn {
+    display: block; width: 100%;
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: var(--ash);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 14px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .plan-btn:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+  .featured .plan-btn {
+    background: var(--fire);
+    border-color: var(--fire);
+    color: var(--white);
+    box-shadow: 0 4px 30px rgba(232,64,12,0.3);
+  }
+  .featured .plan-btn:hover { background: var(--ember); box-shadow: 0 6px 40px rgba(232,64,12,0.45); }
+
+  /* TRAINERS */
+  #trainers {
+    padding: 8rem 5vw;
+    background: var(--black);
+  }
+  .trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.04);
+  }
+  .trainer-card {
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: none;
+  }
+  .trainer-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .trainer-avatar {
+    width: 100%; height: 100%;
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .trainer-avatar-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding-bottom: 0;
+  }
+  .trainer-silhouette {
+    width: 65%;
+    height: 80%;
+    margin-bottom: -1px;
+  }
+  .trainer-gradient {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 70%;
+    background: linear-gradient(to top, var(--black), transparent);
+  }
+  .trainer-accent {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .trainer-card:hover .trainer-accent { opacity: 1; }
+  .trainer-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2rem;
+    transform: translateY(30px); opacity: 0.7;
+    transition: transform 0.35s, opacity 0.35s;
+  }
+  .trainer-card:hover .trainer-info { transform: translateY(0); opacity: 1; }
+  .trainer-specialty {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fire);
+    margin-bottom: 0.4rem;
+  }
+  .trainer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.6rem;
+  }
+  .trainer-bio {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ash);
+    line-height: 1.6;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s;
+  }
+  .trainer-card:hover .trainer-bio { max-height: 100px; }
+  .trainer-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-top: 1rem;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s;
+  }
+  .trainer-card:hover .trainer-tags { max-height: 50px; }
+  .trainer-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 3px 8px;
+  }
+
+  /* TRANSFORMATIONS */
+  #transformations {
+    padding: 8rem 5vw;
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .transformations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .transform-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .transform-images {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .transform-img {
+    aspect-ratio: 2/3;
+    position: relative; overflow: hidden;
+  }
+  .transform-img-fill {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end; justify-content: center;
+    overflow: hidden;
+  }
+  .transform-silhouette {
+    width: 60%; height: 80%;
+  }
+  .transform-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 6px;
+    z-index: 2;
+  }
+  .before-label { color: var(--smoke); background: rgba(10,10,10,0.6); }
+  .after-label { color: var(--fire); background: rgba(10,10,10,0.6); }
+  .transform-divider {
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 2px; background: var(--fire);
+    z-index: 3; transform: translateX(-50%);
+  }
+  .transform-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .transform-stats {
+    display: flex; gap: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .t-stat {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--fire);
+    letter-spacing: 0.05em;
+  }
+  .t-stat span { color: var(--smoke); font-weight: 400; }
+  .transform-quote {
+    font-size: 0.82rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--smoke);
+    line-height: 1.6;
+    border-left: 2px solid var(--fire);
+    padding-left: 1rem;
+  }
+  .transform-duration {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    margin-top: 0.8rem;
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 8rem 5vw;
+    background: var(--black);
+    position: relative;
+  }
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-left { }
+  .contact-tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .contact-tagline em {
+    font-style: normal;
+    color: var(--fire);
+  }
+  .contact-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--smoke);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: var(--ash);
+  }
+  .contact-icon {
+    width: 36px; height: 36px;
+    background: var(--steel);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fire);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--smoke);
+  }
+  .form-input, .form-select, .form-textarea {
+    background: var(--charcoal);
+    border: 1.5px solid rgba(255,255,255,0.07);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--fire);
+  }
+  .form-select { cursor: pointer; }
+  .form-select option { background: var(--charcoal); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    background: var(--fire);
+    color: var(--white);
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 17px;
+    cursor: none;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 30px rgba(232,64,12,0.3);
+    position: relative; overflow: hidden;
+  }
+  .form-submit:hover { background: var(--ember); transform: translateY(-2px); box-shadow: 0 8px 40px rgba(232,64,12,0.45); }
+  .form-submit .btn-ripple {
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .form-submit:active .btn-ripple { transform: scaleX(1); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    padding: 4rem 5vw 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 2rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .footer-logo span { color: var(--fire); }
+  .footer-desc {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--smoke);
+    line-height: 1.7;
+    max-width: 260px;
+    margin-bottom: 1.5rem;
+  }
+  .social-links { display: flex; gap: 0.8rem; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: var(--steel);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--smoke);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .social-btn:hover { background: var(--fire); color: var(--white); }
+  .footer-col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fire);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    color: var(--smoke);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--steel);
+    border-left: 3px solid var(--fire);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    padding: 1rem 1.5rem;
+    transform: translateX(120%); opacity: 0;
+    transition: transform 0.4s, opacity 0.4s;
+    z-index: 500;
+  }
+  .toast.show { transform: none; opacity: 1; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    .plans-grid, .trainers-grid, .transformations-grid { grid-template-columns: 1fr; }
+    .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .hero-stats { position: static; display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
+    nav .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">APE<span>X</span></div>
+  <ul class="nav-links">
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#transformations">Results</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start Today</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Est. 2018 &nbsp;·&nbsp; Premium Fitness</div>
+    <h1 class="hero-title">
+      FORGE<br>
+      <span class="accent">YOUR</span>
+      LEGEND
+    </h1>
+    <p class="hero-sub">
+      Elite training. Real results. A community that refuses to settle. 
+      Your transformation starts the moment you decide to show up.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+        Join Now
+      </a>
+      <a href="#transformations" class="btn-secondary">See Results →</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">2<span>K+</span></div>
+      <div class="stat-label">Members</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">Success Rate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">15<span>+</span></div>
+      <div class="stat-label">Elite Trainers</div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="plans">
+  <div class="section-header reveal">
+    <div class="section-label">Membership Plans</div>
+    <h2 class="section-title">CHOOSE YOUR <em>WEAPON</em></h2>
+  </div>
+  <div class="plans-grid">
+    <!-- Iron -->
+    <div class="plan-card reveal">
+      <div class="plan-tier">Tier 01</div>
+      <div class="plan-name">IRON</div>
+      <div class="plan-price">
+        <div class="price-amount">₹1,999</div>
+        <div class="price-period">/ month</div>
+      </div>
+      <p class="plan-desc">Access to all gym equipment, locker rooms, and open floor space. Perfect for the self-starter.</p>
+      <ul class="plan-features">
+        <li>Full Gym Access (6AM – 10PM)</li>
+        <li>Locker & Shower Access</li>
+        <li>Group Fitness Classes (4/month)</li>
+        <li>Mobile App Access</li>
+        <li class="disabled">Personal Training Sessions</li>
+        <li class="disabled">Nutrition Consultation</li>
+        <li class="disabled">Recovery Lounge</li>
+      </ul>
+      <a href="#contact" class="plan-btn">Get Started</a>
+    </div>
+
+    <!-- Steel (Featured) -->
+    <div class="plan-card featured reveal reveal-delay-1">
+      <div class="plan-tier">Tier 02</div>
+      <div class="plan-name">STEEL</div>
+      <div class="plan-price">
+        <div class="price-amount">₹3,999</div>
+        <div class="price-period">/ month</div>
+      </div>
+      <p class="plan-desc">The complete package. Personal training, group classes, and full recovery support for serious athletes.</p>
+      <ul class="plan-features">
+        <li>24/7 Gym Access</li>
+        <li>Locker & Shower Access</li>
+        <li>Unlimited Group Classes</li>
+        <li>Mobile App + Progress Tracking</li>
+        <li>4 Personal Training Sessions</li>
+        <li>Monthly Nutrition Check-In</li>
+        <li class="disabled">Recovery Lounge</li>
+      </ul>
+      <a href="#contact" class="plan-btn">Get Started</a>
+    </div>
+
+    <!-- Apex -->
+    <div class="plan-card reveal reveal-delay-2">
+      <div class="plan-tier">Tier 03</div>
+      <div class="plan-name">APEX</div>
+      <div class="plan-price">
+        <div class="price-amount">₹6,999</div>
+        <div class="price-period">/ month</div>
+      </div>
+      <p class="plan-desc">No limits. Elite-level access, unlimited coaching, and concierge-level service for those who demand the best.</p>
+      <ul class="plan-features">
+        <li>24/7 VIP Gym Access</li>
+        <li>Private Locker</li>
+        <li>Unlimited Group Classes</li>
+        <li>Advanced App + Body Analytics</li>
+        <li>Unlimited Personal Training</li>
+        <li>Weekly Nutrition Consultation</li>
+        <li>Full Recovery Lounge Access</li>
+      </ul>
+      <a href="#contact" class="plan-btn">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINERS -->
+<section id="trainers">
+  <div class="section-header reveal">
+    <div class="section-label">Our Coaches</div>
+    <h2 class="section-title">MEET THE <em>TEAM</em></h2>
+  </div>
+  <div class="trainers-grid">
+
+    <!-- Trainer 1 -->
+    <div class="trainer-card reveal">
+      <div class="trainer-avatar" style="background: linear-gradient(160deg, #1a1a1a, #0d0d0d);">
+        <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="grd1" cx="50%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#e8400c" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#grd1)"/>
+          <ellipse cx="200" cy="140" rx="55" ry="55" fill="#2a2a2a"/>
+          <ellipse cx="200" cy="140" rx="40" ry="40" fill="#222"/>
+          <circle cx="200" cy="125" r="22" fill="#333"/>
+          <ellipse cx="200" cy="155" rx="18" ry="12" fill="#333"/>
+          <rect x="130" y="195" width="140" height="130" rx="20" fill="#252525"/>
+          <rect x="90" y="195" width="50" height="90" rx="14" fill="#222"/>
+          <rect x="260" y="195" width="50" height="90" rx="14" fill="#222"/>
+          <rect x="150" y="325" width="40" height="100" rx="10" fill="#1e1e1e"/>
+          <rect x="210" y="325" width="40" height="100" rx="10" fill="#1e1e1e"/>
+        </svg>
+        <div class="trainer-gradient"></div>
+        <div class="trainer-accent" style="background: radial-gradient(ellipse at 50% 80%, rgba(232,64,12,0.12), transparent 70%)"></div>
+      </div>
+      <div class="trainer-info">
+        <div class="trainer-specialty">Strength & Conditioning</div>
+        <div class="trainer-name">MARCUS ROWE</div>
+        <div class="trainer-bio">Former national powerlifting champion with 12 years of coaching experience. Specializes in progressive overload and muscle hypertrophy.</div>
+        <div class="trainer-tags">
+          <span class="trainer-tag">Powerlifting</span>
+          <span class="trainer-tag">Hypertrophy</span>
+          <span class="trainer-tag">Nutrition</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trainer 2 -->
+    <div class="trainer-card reveal reveal-delay-1">
+      <div class="trainer-avatar" style="background: linear-gradient(160deg, #1a1a1a, #0d0d0d);">
+        <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="grd2" cx="50%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#grd2)"/>
+          <ellipse cx="200" cy="135" rx="50" ry="50" fill="#2a2a2a"/>
+          <circle cx="200" cy="122" r="20" fill="#333"/>
+          <ellipse cx="200" cy="150" rx="16" ry="10" fill="#333"/>
+          <rect x="140" y="185" width="120" height="140" rx="18" fill="#252525"/>
+          <rect x="100" y="192" width="46" height="80" rx="12" fill="#222"/>
+          <rect x="254" y="192" width="46" height="80" rx="12" fill="#222"/>
+          <rect x="155" y="325" width="38" height="110" rx="10" fill="#1e1e1e"/>
+          <rect x="207" y="325" width="38" height="110" rx="10" fill="#1e1e1e"/>
+        </svg>
+        <div class="trainer-gradient"></div>
+        <div class="trainer-accent" style="background: radial-gradient(ellipse at 50% 80%, rgba(201,168,76,0.12), transparent 70%)"></div>
+      </div>
+      <div class="trainer-info">
+        <div class="trainer-specialty">HIIT & Functional Fitness</div>
+        <div class="trainer-name">PRIYA SHARMA</div>
+        <div class="trainer-bio">Certified CrossFit Level 3 coach and sports nutritionist. Builds programs around real-life movement for maximum fat loss and conditioning.</div>
+        <div class="trainer-tags">
+          <span class="trainer-tag">HIIT</span>
+          <span class="trainer-tag">CrossFit</span>
+          <span class="trainer-tag">Fat Loss</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trainer 3 -->
+    <div class="trainer-card reveal reveal-delay-2">
+      <div class="trainer-avatar" style="background: linear-gradient(160deg, #1a1a1a, #0d0d0d);">
+        <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="grd3" cx="50%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#e8400c" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#grd3)"/>
+          <ellipse cx="200" cy="138" rx="52" ry="52" fill="#2a2a2a"/>
+          <circle cx="200" cy="124" r="21" fill="#333"/>
+          <ellipse cx="200" cy="153" rx="17" ry="11" fill="#333"/>
+          <rect x="135" y="190" width="130" height="135" rx="20" fill="#252525"/>
+          <rect x="95" y="197" width="47" height="85" rx="13" fill="#222"/>
+          <rect x="258" y="197" width="47" height="85" rx="13" fill="#222"/>
+          <rect x="152" y="325" width="39" height="105" rx="10" fill="#1e1e1e"/>
+          <rect x="209" y="325" width="39" height="105" rx="10" fill="#1e1e1e"/>
+        </svg>
+        <div class="trainer-gradient"></div>
+        <div class="trainer-accent" style="background: radial-gradient(ellipse at 50% 80%, rgba(232,64,12,0.1), transparent 70%)"></div>
+      </div>
+      <div class="trainer-info">
+        <div class="trainer-specialty">Yoga & Mobility</div>
+        <div class="trainer-name">ARJUN MEHTA</div>
+        <div class="trainer-bio">500-hour certified yoga instructor and physiotherapist. Bridges the gap between performance and recovery to keep athletes pain-free.</div>
+        <div class="trainer-tags">
+          <span class="trainer-tag">Yoga</span>
+          <span class="trainer-tag">Mobility</span>
+          <span class="trainer-tag">Recovery</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRANSFORMATIONS -->
+<section id="transformations">
+  <div class="section-header reveal">
+    <div class="section-label">Member Results</div>
+    <h2 class="section-title">REAL <em>TRANSFORMATIONS</em></h2>
+  </div>
+  <div class="transformations-grid">
+
+    <!-- Story 1 -->
+    <div class="transform-card reveal">
+      <div class="transform-images">
+        <div class="transform-img" style="background:#141414">
+          <div class="transform-img-fill">
+            <svg viewBox="0 0 120 200" class="transform-silhouette" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="28" rx="20" ry="20" fill="#2a2a2a"/>
+              <ellipse cx="60" cy="80" rx="28" ry="38" fill="#222"/>
+              <rect x="20" y="55" width="18" height="65" rx="8" fill="#1e1e1e"/>
+              <rect x="82" y="55" width="18" height="65" rx="8" fill="#1e1e1e"/>
+              <rect x="35" y="118" width="22" height="60" rx="8" fill="#1e1e1e"/>
+              <rect x="63" y="118" width="22" height="60" rx="8" fill="#1e1e1e"/>
+            </svg>
+          </div>
+          <div class="transform-label before-label">BEFORE</div>
+        </div>
+        <div class="transform-img" style="background:#1a1a1a">
+          <div class="transform-img-fill">
+            <svg viewBox="0 0 120 200" class="transform-silhouette" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="26" rx="18" ry="18" fill="#333"/>
+              <ellipse cx="60" cy="72" rx="22" ry="32" fill="#2a2a2a"/>
+              <rect x="24" y="48" width="20" height="70" rx="7" fill="#252525"/>
+              <rect x="76" y="48" width="20" height="70" rx="7" fill="#252525"/>
+              <rect x="37" y="112" width="20" height="65" rx="7" fill="#222"/>
+              <rect x="63" y="112" width="20" height="65" rx="7" fill="#222"/>
+            </svg>
+          </div>
+          <div class="transform-label after-label">AFTER</div>
+        </div>
+        <div class="transform-divider"></div>
+      </div>
+      <div class="transform-name">RAHUL V.</div>
+      <div class="transform-stats">
+        <div class="t-stat">-18 KG <span>lost</span></div>
+        <div class="t-stat">+12% <span>muscle</span></div>
+      </div>
+      <div class="transform-quote">"I've tried every gym in Jaipur. Apex is the only place where the trainers genuinely care about your progress. Changed my life."</div>
+      <div class="transform-duration">Completed in 6 months · STEEL Plan</div>
+    </div>
+
+    <!-- Story 2 -->
+    <div class="transform-card reveal reveal-delay-1">
+      <div class="transform-images">
+        <div class="transform-img" style="background:#141414">
+          <div class="transform-img-fill">
+            <svg viewBox="0 0 120 200" class="transform-silhouette" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="28" rx="19" ry="19" fill="#2a2a2a"/>
+              <ellipse cx="60" cy="78" rx="26" ry="36" fill="#222"/>
+              <rect x="22" y="54" width="19" height="62" rx="8" fill="#1e1e1e"/>
+              <rect x="79" y="54" width="19" height="62" rx="8" fill="#1e1e1e"/>
+              <rect x="36" y="116" width="21" height="62" rx="8" fill="#1e1e1e"/>
+              <rect x="63" y="116" width="21" height="62" rx="8" fill="#1e1e1e"/>
+            </svg>
+          </div>
+          <div class="transform-label before-label">BEFORE</div>
+        </div>
+        <div class="transform-img" style="background:#1a1a1a">
+          <div class="transform-img-fill">
+            <svg viewBox="0 0 120 200" class="transform-silhouette" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="25" rx="17" ry="17" fill="#333"/>
+              <ellipse cx="60" cy="68" rx="20" ry="30" fill="#2a2a2a"/>
+              <rect x="26" y="46" width="19" height="68" rx="7" fill="#252525"/>
+              <rect x="75" y="46" width="19" height="68" rx="7" fill="#252525"/>
+              <rect x="38" y="110" width="19" height="66" rx="7" fill="#222"/>
+              <rect x="63" y="110" width="19" height="66" rx="7" fill="#222"/>
+            </svg>
+          </div>
+          <div class="transform-label after-label">AFTER</div>
+        </div>
+        <div class="transform-divider"></div>
+      </div>
+      <div class="transform-name">SNEHA K.</div>
+      <div class="transform-stats">
+        <div class="t-stat">-24 KG <span>lost</span></div>
+        <div class="t-stat">2× <span>stronger</span></div>
+      </div>
+      <div class="transform-quote">"Priya's HIIT classes are brutal — in the best way. I went from avoiding mirrors to competing in my first fitness event."</div>
+      <div class="transform-duration">Completed in 9 months · APEX Plan</div>
+    </div>
+
+    <!-- Story 3 -->
+    <div class="transform-card reveal reveal-delay-2">
+      <div class="transform-images">
+        <div class="transform-img" style="background:#141414">
+          <div class="transform-img-fill">
+            <svg viewBox="0 0 120 200" class="transform-silhouette" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="29" rx="20" ry="20" fill="#2a2a2a"/>
+              <ellipse cx="60" cy="80" rx="27" ry="37" fill="#222"/>
+              <rect x="21" y="56" width="18" height="64" rx="8" fill="#1e1e1e"/>
+              <rect x="81" y="56" width="18" height="64" rx="8" fill="#1e1e1e"/>
+              <rect x="36" y="118" width="21" height="61" rx="8" fill="#1e1e1e"/>
+              <rect x="63" y="118" width="21" height="61" rx="8" fill="#1e1e1e"/>
+            </svg>
+          </div>
+          <div class="transform-label before-label">BEFORE</div>
+        </div>
+        <div class="transform-img" style="background:#1a1a1a">
+          <div class="transform-img-fill">
+            <svg viewBox="0 0 120 200" class="transform-silhouette" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="26" rx="17" ry="17" fill="#333"/>
+              <ellipse cx="60" cy="70" rx="21" ry="31" fill="#2a2a2a"/>
+              <rect x="25" y="47" width="20" height="69" rx="7" fill="#252525"/>
+              <rect x="75" y="47" width="20" height="69" rx="7" fill="#252525"/>
+              <rect x="37" y="112" width="20" height="64" rx="7" fill="#222"/>
+              <rect x="63" y="112" width="20" height="64" rx="7" fill="#222"/>
+            </svg>
+          </div>
+          <div class="transform-label after-label">AFTER</div>
+        </div>
+        <div class="transform-divider"></div>
+      </div>
+      <div class="transform-name">DEVRAJ M.</div>
+      <div class="transform-stats">
+        <div class="t-stat">+9 KG <span>muscle</span></div>
+        <div class="t-stat">3× <span>lifts</span></div>
+      </div>
+      <div class="transform-quote">"Marcus built me a program I actually stuck to. First time in 30 years I feel like an athlete again. The community keeps you going."</div>
+      <div class="transform-duration">Completed in 12 months · APEX Plan</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="contact-left reveal">
+      <div class="section-label" style="justify-content:flex-start">Get In Touch</div>
+      <h2 class="contact-tagline">
+        READY TO<br>
+        <em>START YOUR</em><br>
+        JOURNEY?
+      </h2>
+      <p class="contact-desc">
+        Stop waiting. Stop planning. Every day you delay is a day further from the person you want to become. 
+        Fill out the form and we'll reach out within 24 hours.
+      </p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          Plot 17, Tonk Road, Durgapura, Jaipur, Rajasthan 302018
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.17 18 19.5 19.5 0 0 1 5 11.83 19.79 19.79 0 0 1 2.12 2.18 2 2 0 0 1 4.11 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 7.91A16 16 0 0 0 14 13.91l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 14.92z"/></svg>
+          </div>
+          +91 98765 43210
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          info@apexfitness.in
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          Mon–Sat: 5:30 AM – 11 PM &nbsp;·&nbsp; Sun: 7 AM – 6 PM
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-wrap reveal reveal-delay-1">
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" placeholder="Rahul">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" placeholder="Verma">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="tel" class="form-input" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">I'm Interested In</label>
+          <select class="form-select">
+            <option value="">Select a plan…</option>
+            <option>IRON — ₹1,999/month</option>
+            <option>STEEL — ₹3,999/month</option>
+            <option>APEX — ₹6,999/month</option>
+            <option>Personal Training Only</option>
+            <option>Corporate Membership</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Goal (Optional)</label>
+          <textarea class="form-textarea" placeholder="Tell us what you want to achieve…"></textarea>
+        </div>
+        <button class="form-submit" id="submitBtn" onclick="handleSubmit(event)">
+          <span class="btn-ripple"></span>
+          Claim Your Free Trial Session →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">APE<span>X</span></div>
+      <p class="footer-desc">Premium fitness training in the heart of Jaipur. We build athletes, not just members.</p>
+      <div class="social-links">
+        <a href="#" class="social-btn" title="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="social-btn" title="YouTube">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        </a>
+        <a href="#" class="social-btn" title="Twitter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#plans">Membership Plans</a></li>
+        <li><a href="#trainers">Our Trainers</a></li>
+        <li><a href="#transformations">Transformations</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="#">Strength Training</a></li>
+        <li><a href="#">HIIT & Cardio</a></li>
+        <li><a href="#">Yoga & Mobility</a></li>
+        <li><a href="#">Corporate Wellness</a></li>
+        <li><a href="#">Nutrition Plans</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Hours</div>
+      <ul class="footer-links">
+        <li><a href="#">Mon – Fri: 5:30 AM</a></li>
+        <li><a href="#">Sat: 6:00 AM</a></li>
+        <li><a href="#">Sun: 7:00 AM</a></li>
+        <li><a href="#">Closes 11 PM daily</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 APEX FITNESS, JAIPUR. ALL RIGHTS RESERVED.</span>
+    <span>FORGED IN FIRE. BUILT TO LAST.</span>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">🔥 Received! We'll contact you within 24 hours.</div>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .plan-card, .trainer-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width='18px'; cursor.style.height='18px'; ring.style.width='50px'; ring.style.height='50px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; });
+  });
+
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending…';
+    setTimeout(() => {
+      btn.textContent = '✓ Request Sent!';
+      btn.style.background = '#1a8a4a';
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }, 900);
+  }
+</script>
+</body>
+</html>
