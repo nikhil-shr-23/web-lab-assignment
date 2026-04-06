@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAdvance - Shaping Future Leaders</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">EduAdvance<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#faculty">Faculty</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <a href="#enquiry" class="btn-enroll">Enroll Now</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Master The Skills of <br> Tomorrow, <span class="text-gold">Today.</span></h1>
+            <p>Join over 10,000 ambitious learners. From data science to creative arts, our expert-led online courses are designed to accelerate your career.</p>
+            <div class="hero-stats">
+                <div class="stat"><h3>50+</h3><span>Courses</span></div>
+                <div class="stat"><h3>98%</h3><span>Success Rate</span></div>
+                <div class="stat"><h3>24/7</h3><span>Support</span></div>
+            </div>
+            <a href="#courses" class="btn-primary">Explore Programs</a>
+        </div>
+        <div class="hero-graphics">
+            <div class="blob"></div>
+            <!-- Elegant placeholder -->
+            <div class="hero-icon">🎓</div>
+        </div>
+    </header>
+
+    <!-- Course Highlights -->
+    <section id="courses" class="courses-section">
+        <div class="container">
+            <h2>Featured Programs</h2>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-img">💻</div>
+                    <h3>Full-Stack Engineering</h3>
+                    <p>12 weeks • Beginner to Pro</p>
+                </div>
+                <div class="course-card">
+                    <div class="course-img">📈</div>
+                    <h3>Advanced Data Analytics</h3>
+                    <p>8 weeks • Intermediate</p>
+                </div>
+                <div class="course-card">
+                    <div class="course-img">🎨</div>
+                    <h3>UI/UX Design Masterclass</h3>
+                    <p>10 weeks • All Levels</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Intro -->
+    <section id="faculty" class="faculty-section">
+        <div class="container">
+            <h2>Learn From The Best</h2>
+            <div class="faculty-grid">
+                <div class="faculty-card">
+                    <div class="faculty-avatar">👩‍🔬</div>
+                    <h3>Dr. Sarah Jenkins</h3>
+                    <p>Data Science Lead at TechNova</p>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-avatar">👨‍💻</div>
+                    <h3>Mark Rufallo</h3>
+                    <p>Senior Software Engineer</p>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-avatar">👩‍🎨</div>
+                    <h3>Elena Rostova</h3>
+                    <p>Award-winning UX Designer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Testimonials -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2>Success Stories</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <p>"EduAdvance completely transformed my career. Within a month of finishing the analytics course, I landed a job at my dream company."</p>
+                    <div class="test-author">- David K. (Alumni)</div>
+                </div>
+                <div class="test-card">
+                    <p>"The UI/UX curriculum is perfectly structured. The mentorship from Elena was invaluable to my portfolio."</p>
+                    <div class="test-author">- Amanda P. (Alumni)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">Are the courses 100% online?</button>
+                    <div class="accordion-content"><p>Yes! You can learn from anywhere in the world at your own pace.</p></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Do you provide job placement support?</button>
+                    <div class="accordion-content"><p>Absolutely. All our premium plans include portfolio reviews, mock interviews, and access to our hiring network.</p></div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">What is the refund policy?</button>
+                    <div class="accordion-content"><p>We offer a hassle-free 14-day money-back guarantee for all individual courses.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enquiry Section -->
+    <section id="enquiry" class="enquiry-section">
+        <div class="container">
+            <div class="enquiry-box">
+                <div class="enquiry-text">
+                    <h2>Still have questions?</h2>
+                    <p>Leave your details below and an academic advisor will get back to you within 24 hours.</p>
+                </div>
+                <form id="enquiryForm" class="enquiry-form">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <select required>
+                        <option value="">Interested Course...</option>
+                        <option>Engineering</option>
+                        <option>Data Science</option>
+                        <option>Design</option>
+                    </select>
+                    <button type="submit" class="btn-primary">Submit Enquiry</button>
+                    <div id="enquiryStatus" class="form-status"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 EduAdvance Institute. Empowering Minds.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

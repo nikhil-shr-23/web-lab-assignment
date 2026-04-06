@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteFast - Premium Food Delivery</title>
+    <meta name="description" content="Experience lightning-fast delivery of gourmet meals straight to your door with BiteFast.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">🍕 BiteFast</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#areas">Areas</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+        </ul>
+        <a href="#order" class="btn-nav">Order Now</a>
+    </nav>
+
+    <!-- Welcome Banner/Hero -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Cravings Delivered <br><span class="highlight">In Minutes.</span></h1>
+            <p>Hot, fresh, and irresistibly delicious. Explore top-rated local restaurants and enjoy seamless ordering with minimal delivery fees.</p>
+            <div class="hero-btns">
+                <a href="#order" class="btn-primary">Explore Menu</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="circle-bg"></div>
+            <!-- Using emoji placeholder for quick vibrant aesthetic -->
+            <div class="hero-icon">🍔</div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">Why Choose Us?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="f-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>We guarantee your food arrives piping hot in under 30 minutes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">🥗</div>
+                <h3>Fresh Ingredients</h3>
+                <p>Local, farm-fresh ingredients to keep you healthy and satisfied.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">💸</div>
+                <h3>No Hidden Fees</h3>
+                <p>What you see is what you pay. Transparent and honest pricing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Areas Section -->
+    <section id="areas" class="areas-section">
+        <h2 class="section-title">Where We Deliver</h2>
+        <p class="section-subtitle">We are rapidly expanding. Current service areas include:</p>
+        <div class="areas-grid">
+            <div class="area-tag">Downtown District</div>
+            <div class="area-tag">Westside Valley</div>
+            <div class="area-tag">North Heights</div>
+            <div class="area-tag">Emerald Suburb</div>
+            <div class="area-tag">Silver Lake</div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section id="reviews" class="reviews-section">
+        <h2 class="section-title">What Our Foodies Say</h2>
+        <div class="reviews-container">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Absolutely phenomenal service. The food was extremely fresh and arrived much quicker than I expected."</p>
+                <span class="author">- Jane Doe</span>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"BiteFast changed how I eat on busy worknights. The tracking UI is smooth and fun!"</p>
+                <span class="author">- Michael Smith</span>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★☆</div>
+                <p>"Wide variety of restaurants and great customer support. Highly recommended."</p>
+                <span class="author">- Sarah L.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order/Contact Form -->
+    <section id="order" class="contact-section">
+        <div class="contact-card">
+            <h2>Ready to Order?</h2>
+            <p>Join our priority delivery list or reach out for inquiries.</p>
+            <form id="contactForm">
+                <div class="input-group">
+                    <input type="text" id="name" required placeholder="Full Name">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" required placeholder="Email Address">
+                </div>
+                <div class="input-group">
+                    <textarea id="message" rows="3" placeholder="Special requests or questions?"></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-100">Send Inquiry</button>
+            </form>
+            <div id="formStatus" class="form-status"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 BiteFast Delivery. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
